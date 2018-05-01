@@ -30,6 +30,16 @@ class Employee
   end
 end
 
+class Manager < Employee # this means that the manager inherits everything from the Employee class
+  def send_report
+    puts "Sending email....."
+    # the code to send email
+    puts "Email sent"
+  end
+end
+
+
+
 
 employee_1 = Employee.new(
                           first_name: "Tim", 
@@ -52,11 +62,8 @@ manager_1 = Manager.new(
                         active: true
                          )
 
-
-
 employee_1.print_info
 employee_2.print_info
 manager_1.print_info
 manager_1.send_report
-
 
