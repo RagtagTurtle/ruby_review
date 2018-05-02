@@ -12,7 +12,7 @@
 
 class Employee
   attr_reader :first_name, :salary, :active
-  attr_writer :first_name, :last_name
+  attr_writer :first_name, :last_name, :active
 
   def initialize(input_options)
     @first_name = input_options[:first_name]
@@ -31,14 +31,43 @@ class Employee
 end
 
 class Manager < Employee # this means that the manager inherits everything from the Employee class
+  attr_reader :employees
+
+  def initialize(input_options)
+    super(input_options)
+    @employees = input_options[:employees]
+  end
+
   def send_report
     puts "Sending email....."
     # the code to send email
     puts "Email sent"
   end
+
+  def give_all_raises
+    #loop through employees
+    # use give_annual_raise method to raise each employees salary
+    employees.each do |employee|
+      employee.give_annual_raise
+    end
+  end
+
+  # def a
+  #   "apple"     # Example of using a method inside of a method. If you run both of these, it will print apple twice. 
+  # end
+
+  # def b
+  #   a 
+  # end
+
+  def fire_all_employees
+    # loop through each employee
+    # change individual employment status to false
+    employees.each do |managers_employee|
+      managers_employee.active = false
+    end
+  end
 end
-
-
 
 
 employee_1 = Employee.new(
@@ -59,11 +88,25 @@ manager_1 = Manager.new(
                         first_name: "Betty",
                         last_name: "Crocker",
                         salary: 100000,
-                        active: true
+                        active: true,
+                        employees: [employee_1, employee_2]
                          )
 
-employee_1.print_info
-employee_2.print_info
-manager_1.print_info
-manager_1.send_report
+p employee_1.salary
+p employee_2.salary
+
+manager_1.give_all_raises
+
+p employee_1.salary
+p employee_2.salary
+
+p employee_1.active
+p employee_2.active
+
+manager_1.fire_all_employees
+
+p employee_1.active
+p employee_2.active
+
+
 
