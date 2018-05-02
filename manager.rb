@@ -1,14 +1,10 @@
-# employee_1 = ["Taylor", 70000, true, "Tim"]
-# employee_2 = ["Walter", "Cronkite", 80000, true]
-
-# puts employee_1[0] + " " + employee_1[1].to_s + " makes " + employee_1[2].to_s + " a year."
-# puts "#{employee_2[0]} #{employee_2[1]} makes #{employee_2[2]} a year."
-
-# employee_1 = {:last_name => "Taylor", :salary => 70000, :active => true, :first_name => "Tim"}
-# employee_2 = {first_name: "Walter", last_name: "Cronkite", salary: 80000, active: true}
-
-# puts "#{employee_1[:first_name]} #{employee_1[:last_name]} makes #{employee_1[:salary]} a year."
-# puts "#{employee_2[:first_name]} #{employee_2[:last_name]} makes #{employee_2[:salary]} a year."
+module EmailReportable  # module names use Camel Case just like classes
+  def send_report
+    puts "Sending email....."
+    # the code to send email
+    puts "Email sent"
+  end
+end
 
 class Employee
   attr_reader :first_name, :salary, :active
@@ -31,17 +27,13 @@ class Employee
 end
 
 class Manager < Employee # this means that the manager inherits everything from the Employee class
+  include EmailReportable
+
   attr_reader :employees
 
   def initialize(input_options)
     super(input_options)
     @employees = input_options[:employees]
-  end
-
-  def send_report
-    puts "Sending email....."
-    # the code to send email
-    puts "Email sent"
   end
 
   def give_all_raises
@@ -69,6 +61,16 @@ class Manager < Employee # this means that the manager inherits everything from 
   end
 end
 
+class Intern < Employee
+  include EmailReportable
+end
+
+
+
+
+
+
+
 
 employee_1 = Employee.new(
                           first_name: "Tim", 
@@ -90,23 +92,22 @@ manager_1 = Manager.new(
                         salary: 100000,
                         active: true,
                         employees: [employee_1, employee_2]
-                         )
+                        )
 
-p employee_1.salary
-p employee_2.salary
+intern = Intern.new(
+                    first_name: "Jimmy",
+                    last_name: "Olsen",
+                    salary: 25000,
+                    active: true,
+                    )
 
-manager_1.give_all_raises
 
-p employee_1.salary
-p employee_2.salary
 
-p employee_1.active
-p employee_2.active
+intern.print_info
+intern.send_report
 
-manager_1.fire_all_employees
 
-p employee_1.active
-p employee_2.active
+
 
 
 
